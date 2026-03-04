@@ -26,6 +26,12 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "b7a9ec26-daa9-4822-8ffc-7fc945addfc4"
+      }
+    },
+    "owner": "jaikishore-x17"
   }
 }

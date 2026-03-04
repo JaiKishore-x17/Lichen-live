@@ -93,7 +93,7 @@ const ProfileScreen = () => {
                     </Card>
 
                     <View style={styles.footer}>
-                        <StyledText variant="caption" style={styles.versionText}>LICHEN CORE V0.0.1</StyledText>
+                        <StyledText variant="caption" style={styles.versionText}>LICHEN CORE V0.0.4</StyledText>
                         <StyledText variant="caption" style={styles.creditText}>BUILT FOR ENVIRONMENTAL PRECISION</StyledText>
                     </View>
 
