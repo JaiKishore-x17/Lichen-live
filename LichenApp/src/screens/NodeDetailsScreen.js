@@ -10,9 +10,12 @@ import { useRealtimeData } from '../hooks/useRealtimeData';
 
 const NodeDetailsScreen = () => {
     const insets = useSafeAreaInsets();
-    const { data: latest, loading } = useRealtimeData('LatestReadings');
+    const { data: latest, loading, lastUpdated, isOffline } = useRealtimeData('LatestReadings');
     const borderColorAnim = useRef(new Animated.Value(0)).current;
     const prevDataRef = useRef(null);
+
+    const statusColor = isOffline ? COLORS.error || '#EF4444' : (loading ? COLORS.textSecondary : COLORS.primary);
+    const statusText = isOffline ? 'NODE OFFLINE' : (loading ? 'SYNCING' : 'NODE ACTIVE');
 
     useEffect(() => {
         if (!loading && latest) {
@@ -45,8 +48,8 @@ const NodeDetailsScreen = () => {
                     <View style={styles.header}>
                         <StyledText variant="logo">HARDWARE</StyledText>
                         <View style={styles.syncBadge}>
-                            <View style={[styles.syncDot, { backgroundColor: loading ? COLORS.textSecondary : COLORS.primary }]} />
-                            <StyledText style={styles.syncText}>{loading ? 'SYNCING' : 'NODE ACTIVE'}</StyledText>
+                            <View style={[styles.syncDot, { backgroundColor: statusColor }]} />
+                            <StyledText style={styles.syncText}>{statusText}</StyledText>
                         </View>
                     </View>
 
@@ -133,7 +136,7 @@ const NodeDetailsScreen = () => {
                             <StyledText variant="caption">SYSTEM STATUS</StyledText>
                             <Database color={COLORS.primary} size={16} />
                         </View>
-                        <StyledText style={styles.logText}>REST API Polling: Active (20.0s)</StyledText>
+                        <StyledText style={styles.logText}>REST API Polling: {isOffline ? 'Disconnected' : 'Active (20.0s)'}</StyledText>
                     </Card>
 
                     <View style={{ height: 100 }} />

@@ -10,8 +10,11 @@ import { useRealtimeData } from '../hooks/useRealtimeData';
 
 const DashboardScreen = () => {
     const insets = useSafeAreaInsets();
-    const { data: latest, loading } = useRealtimeData('LatestReadings');
+    const { data: latest, loading, lastUpdated, isOffline } = useRealtimeData('LatestReadings');
     const syncPulse = useRef(new Animated.Value(0)).current;
+
+    const statusColor = isOffline ? COLORS.error || '#EF4444' : (loading ? COLORS.textSecondary : COLORS.primary);
+    const statusText = isOffline ? 'OFFLINE' : (loading ? 'SYNCING...' : 'LIVE FEED');
 
     // Previous data reference to detect changes
     const prevDataRef = useRef(null);
@@ -65,7 +68,7 @@ const DashboardScreen = () => {
                             {loading ? (
                                 <ActivityIndicator color={COLORS.primary} size="small" />
                             ) : (
-                                <RefreshCcw color={COLORS.primary} size={20} />
+                                <RefreshCcw color={statusColor} size={20} />
                             )}
                         </Animated.View>
                     </View>
@@ -79,7 +82,7 @@ const DashboardScreen = () => {
                                 <StyledText style={styles.pendingLabel}>AQI CALCULATION PENDING</StyledText>
                             </View>
                             <View style={styles.aqiFooter}>
-                                <StyledText style={styles.aqiStatusSmall}>READY FOR DATA</StyledText>
+                                <StyledText style={styles.aqiStatusSmall}>{isOffline ? 'OFFLINE' : 'READY FOR DATA'}</StyledText>
                             </View>
                         </Card>
 
@@ -87,13 +90,13 @@ const DashboardScreen = () => {
                             <Card variant="light" style={styles.hubCard} borderColor={borderInterpolation}>
                                 <View style={styles.hubHeader}>
                                     <StyledText variant="caption" style={styles.hubCaption}>NODE STATUS</StyledText>
-                                    <MapPin color={COLORS.textSecondary} size={20} />
+                                    <MapPin color={statusColor} size={20} />
                                 </View>
-                                <StyledText variant="header" style={styles.hubName}>Lichen Active Node</StyledText>
+                                <StyledText variant="header" style={styles.hubName}>{isOffline ? 'Lichen Offline' : 'Lichen Active Node'}</StyledText>
                                 <View style={styles.syncStatus}>
-                                    <View style={[styles.syncDot, { backgroundColor: loading ? COLORS.textSecondary : COLORS.primary }]} />
+                                    <View style={[styles.syncDot, { backgroundColor: statusColor }]} />
                                     <StyledText variant="caption" style={styles.syncText}>
-                                        {loading ? 'SYNCING...' : 'LIVE FEED'}
+                                        {statusText}
                                     </StyledText>
                                 </View>
                             </Card>

@@ -6,9 +6,14 @@ import StyledText from '../components/StyledText';
 import { User, Settings, Bell, Shield, HelpCircle, LogOut, ChevronRight, Cpu } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BackgroundWrapper from '../theme/BackgroundWrapper';
+import { useRealtimeData } from '../hooks/useRealtimeData';
 
 const ProfileScreen = () => {
     const insets = useSafeAreaInsets();
+    const { loading, isOffline } = useRealtimeData('LatestReadings');
+
+    const statusColor = isOffline ? COLORS.error || '#EF4444' : (loading ? COLORS.textSecondary : COLORS.primary);
+    const statusLabel = isOffline ? 'Offline' : (loading ? 'Linking...' : 'Online');
 
     const SettingItem = ({ icon: Icon, label, value, onPress, isLast }) => (
         <Pressable
@@ -52,13 +57,13 @@ const ProfileScreen = () => {
                     <StyledText variant="caption" style={styles.sectionTitle}>LINKED HARDWARE</StyledText>
                     <Card variant="light" style={styles.nodeCard}>
                         <View style={styles.nodeIcon}>
-                            <Cpu color={COLORS.primary} size={24} />
+                            <Cpu color={statusColor} size={24} />
                         </View>
                         <View style={styles.nodeInfo}>
                             <StyledText style={styles.nodeName}>Lichen Node 01</StyledText>
-                            <StyledText variant="caption">ESP32-S3 • Online</StyledText>
+                            <StyledText variant="caption">ESP32-S3 • {statusLabel}</StyledText>
                         </View>
-                        <View style={styles.statusDot} />
+                        <View style={[styles.statusDot, { backgroundColor: statusColor, shadowColor: statusColor }]} />
                     </Card>
 
                     <StyledText variant="caption" style={styles.sectionTitle}>PREFERENCES</StyledText>

@@ -15,28 +15,35 @@ const AnalyticsScreen = () => {
 
     // Process history data for charts
     const { chartData, maxPpmValue } = useMemo(() => {
-        if (!history) return { chartData: { co2Data: [], nh4Data: [], no2Data: [], tempData: [] }, maxPpmValue: 10 };
+        // Defensive check for history object
+        if (!history || typeof history !== 'object' || Object.keys(history).length === 0) {
+            return { chartData: { co2Data: [], nh4Data: [], no2Data: [], tempData: [] }, maxPpmValue: 10 };
+        }
 
         // Take last 15 readings for enough data points in line chart
-        const logs = Object.values(history).slice(-15);
+        const logs = Object.values(history).filter(log => log && typeof log === 'object').slice(-15);
+
+        if (logs.length === 0) {
+            return { chartData: { co2Data: [], nh4Data: [], no2Data: [], tempData: [] }, maxPpmValue: 10 };
+        }
 
         const co2Data = logs.map((log, index) => ({
-            value: log.MQ135?.PPM_CO2 || 0,
+            value: Number(log.MQ135?.PPM_CO2) || 0,
             label: `-${(logs.length - 1 - index) * 20}s`,
             dataPointColor: COLORS.primary,
         }));
         const nh4Data = logs.map((log, index) => ({
-            value: log.MQ135?.PPM_NH4 || 0,
+            value: Number(log.MQ135?.PPM_NH4) || 0,
             label: `-${(logs.length - 1 - index) * 20}s`,
             dataPointColor: COLORS.secondary,
         }));
         const no2Data = logs.map((log, index) => ({
-            value: log.MQ135?.PPM_NO2 || 0,
+            value: Number(log.MQ135?.PPM_NO2) || 0,
             label: `-${(logs.length - 1 - index) * 20}s`,
             dataPointColor: '#F472B6',
         }));
         const tempData = logs.map(log => ({
-            value: log.DHT11?.Temp_C || 0
+            value: Number(log.DHT11?.Temp_C) || 0
         }));
 
         // Find max value across all 3 PPM datasets to unify scale
@@ -44,8 +51,9 @@ const AnalyticsScreen = () => {
             ...co2Data.map(d => d.value),
             ...nh4Data.map(d => d.value),
             ...no2Data.map(d => d.value)
-        ];
-        const rawMax = Math.max(...allValues, 5);
+        ].filter(v => !isNaN(v));
+
+        const rawMax = allValues.length > 0 ? Math.max(...allValues, 5) : 10;
         const unifiedMax = Math.ceil(rawMax / 5) * 5; // Nice rounded scale
 
         return {
@@ -63,6 +71,10 @@ const AnalyticsScreen = () => {
             <View style={styles.chartContainer}>
                 {loading ? (
                     <ActivityIndicator color={color} />
+                ) : data.length === 0 ? (
+                    <View style={styles.emptyChart}>
+                        <StyledText style={styles.emptyText}>NO HISTORICAL DATA AVAILABLE</StyledText>
+                    </View>
                 ) : (
                     <LineChart
                         data={data}
@@ -89,6 +101,7 @@ const AnalyticsScreen = () => {
                             pointerColor: 'lightgray',
                             radius: 6,
                             pointerLabelComponent: items => {
+                                if (!items || items.length === 0) return null;
                                 return (
                                     <View style={styles.pointerLabel}>
                                         <StyledText style={{ color: 'white', fontWeight: 'bold' }}>
@@ -170,6 +183,19 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    emptyChart: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        borderRadius: BORDER_RADIUS.md,
+    },
+    emptyText: {
+        color: COLORS.textSecondary,
+        fontSize: 10,
+        fontWeight: 'bold',
+        letterSpacing: 1,
     },
 });
 

@@ -6,6 +6,16 @@ export const useRealtimeData = (path) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [lastUpdated, setLastUpdated] = useState(null);
+    const [now, setNow] = useState(Date.now());
+
+    // Ticker to force re-renders for offline checks
+    useEffect(() => {
+        const interval = setInterval(() => setNow(Date.now()), 5000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const isOffline = !lastUpdated || (now - lastUpdated > 30000);
 
     const fetchData = async () => {
         try {
@@ -17,7 +27,18 @@ export const useRealtimeData = (path) => {
             }
 
             const json = await response.json();
-            setData(json);
+
+            // Update lastUpdated only if data exists and is different
+            if (json) {
+                setData(prevData => {
+                    const dataChanged = JSON.stringify(prevData) !== JSON.stringify(json);
+                    if (dataChanged) {
+                        setLastUpdated(Date.now());
+                    }
+                    return json;
+                });
+            }
+
             setLoading(false);
             setError(null);
         } catch (err) {
@@ -33,5 +54,5 @@ export const useRealtimeData = (path) => {
         return () => clearInterval(interval);
     }, [path]);
 
-    return { data, loading, error, refetch: fetchData };
+    return { data, loading, error, lastUpdated, isOffline, refetch: fetchData };
 };
