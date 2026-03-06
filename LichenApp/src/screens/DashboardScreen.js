@@ -129,7 +129,7 @@ const DashboardScreen = () => {
                                     <StyledText variant="caption" style={styles.gridCaption}>TEMP</StyledText>
                                 </View>
                                 <StyledText variant="value" style={styles.gridValue}>
-                                    {getVal('DHT11', 'Temp_C')} <StyledText style={styles.unit}>°C</StyledText>
+                                    {getVal('BMP280', 'Temp_C')} <StyledText style={styles.unit}>°C</StyledText>
                                 </StyledText>
                             </Card>
                             <Card variant="light" style={styles.gridCard} borderColor={borderInterpolation}>

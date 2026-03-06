@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     lightGlass: {
-        backgroundColor: 'rgba(255, 255, 255, 0.7)', // Slightly more transparent for better contrast with blur
+        backgroundColor: 'rgba(255, 255, 255, 0.93)', // Slightly more transparent for better contrast with blur
     },
     darkGlass: {
         backgroundColor: 'rgba(15, 23, 42, 0.45)',

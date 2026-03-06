@@ -28,13 +28,28 @@ export const useRealtimeData = (path) => {
 
             const json = await response.json();
 
-            // Update lastUpdated only if data exists and is different
+            // Extract remote timestamp if available (prioritize top level)
+            // Handle both seconds and milliseconds (assume > 2000000000 is milliseconds)
+            let remoteTimestamp = null;
+            if (json && json.timestamp) {
+                remoteTimestamp = json.timestamp > 2000000000 ? json.timestamp : json.timestamp * 1000;
+            }
+
+            // Update lastUpdated only if data exists
             if (json) {
+                // If we have a remote timestamp, update lastUpdated immediately
+                if (remoteTimestamp) {
+                    setLastUpdated(remoteTimestamp);
+                }
+
                 setData(prevData => {
                     const dataChanged = JSON.stringify(prevData) !== JSON.stringify(json);
-                    if (dataChanged) {
+
+                    // Fallback to local Date.now() ONLY if no remote timestamp and data changed
+                    if (!remoteTimestamp && dataChanged) {
                         setLastUpdated(Date.now());
                     }
+
                     return json;
                 });
             }
