@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, ActivityIndicator, Animated } from 'react
 import { COLORS, SPACING } from '../theme/theme';
 import Card from '../components/Card';
 import StyledText from '../components/StyledText';
-import { Cpu, Wifi, Database, Clock, Thermometer, Droplets } from 'lucide-react-native';
+import { Cpu, Wifi, Database, Clock, Thermometer, Droplets, Layers, Leaf } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BackgroundWrapper from '../theme/BackgroundWrapper';
 import { useRealtimeData } from '../hooks/useRealtimeData';
@@ -46,7 +46,12 @@ const NodeDetailsScreen = () => {
             <View style={[styles.container, { paddingTop: insets.top }]}>
                 <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                     <View style={styles.header}>
-                        <StyledText variant="logo">HARDWARE</StyledText>
+                        <View style={styles.logoGroup}>
+                            <View style={styles.leafBadge}>
+                                <Leaf color={COLORS.primary} size={16} strokeWidth={2.5} />
+                            </View>
+                            <StyledText variant="logo">HARDWARE</StyledText>
+                        </View>
                         <View style={styles.syncBadge}>
                             <View style={[styles.syncDot, { backgroundColor: statusColor }]} />
                             <StyledText style={styles.syncText}>{statusText}</StyledText>
@@ -57,7 +62,7 @@ const NodeDetailsScreen = () => {
                         <View style={styles.hardwareInfo}>
                             <View>
                                 <StyledText variant="caption">DEVICE</StyledText>
-                                <StyledText variant="header">ESP32-S3 CORE</StyledText>
+                                <StyledText variant="header">ESP32-WROOM</StyledText>
                             </View>
                             <Wifi color={COLORS.primary} size={24} />
                         </View>
@@ -111,6 +116,14 @@ const NodeDetailsScreen = () => {
                                 <StyledText style={styles.dataLabel}>CO2 PPM</StyledText>
                                 <StyledText style={styles.dataValue}>{getVal('MQ135', 'PPM_CO2')}</StyledText>
                             </View>
+                            <View style={styles.telemetryItem}>
+                                <StyledText style={styles.dataLabel}>NO2 PPM</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('MQ135', 'PPM_NO2')}</StyledText>
+                            </View>
+                            <View style={styles.telemetryItem}>
+                                <StyledText style={styles.dataLabel}>NH4 PPM</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('MQ135', 'PPM_NH4')}</StyledText>
+                            </View>
                         </View>
                     </Card>
 
@@ -127,6 +140,27 @@ const NodeDetailsScreen = () => {
                             <View style={styles.telemetryItem}>
                                 <StyledText style={styles.dataLabel}>HI INDEX</StyledText>
                                 <StyledText style={styles.dataValue}>{getVal('DHT11', 'HeatIndex')}°C</StyledText>
+                            </View>
+                        </View>
+                    </Card>
+
+                    <Card variant="light" style={styles.telemetryCard} borderColor={borderInterpolation}>
+                        <View style={styles.telemetryHeader}>
+                            <Layers color={COLORS.textDark} size={20} />
+                            <StyledText variant="caption" style={styles.darkCaption}>GP2Y1014 DUST SENSOR</StyledText>
+                        </View>
+                        <View style={styles.telemetryData}>
+                            <View style={styles.telemetryItem}>
+                                <StyledText style={styles.dataLabel}>DENSITY</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('Dust', 'Density_mgm3')} <StyledText style={styles.dataUnit}>mg/m³</StyledText></StyledText>
+                            </View>
+                            <View style={styles.telemetryItem}>
+                                <StyledText style={styles.dataLabel}>STATUS</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('Dust', 'Status')}</StyledText>
+                            </View>
+                            <View style={styles.telemetryItem}>
+                                <StyledText style={styles.dataLabel}>VOLTAGE</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('Dust', 'Voltage')} <StyledText style={styles.dataUnit}>V</StyledText></StyledText>
                             </View>
                         </View>
                     </Card>
@@ -154,6 +188,21 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: SPACING.xl,
+    },
+    logoGroup: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    leafBadge: {
+        width: 32,
+        height: 32,
+        borderRadius: 9,
+        backgroundColor: 'rgba(0, 230, 118, 0.12)',
+        borderWidth: 1,
+        borderColor: 'rgba(0, 230, 118, 0.3)',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     syncBadge: {
         flexDirection: 'row',

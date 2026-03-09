@@ -61,7 +61,7 @@ const ProfileScreen = () => {
                         </View>
                         <View style={styles.nodeInfo}>
                             <StyledText style={styles.nodeName}>Lichen Node 01</StyledText>
-                            <StyledText variant="caption">ESP32-S3 • {statusLabel}</StyledText>
+                            <StyledText variant="caption">ESP32-WROOM • {statusLabel}</StyledText>
                         </View>
                         <View style={[styles.statusDot, { backgroundColor: statusColor, shadowColor: statusColor }]} />
                     </Card>
@@ -93,7 +93,7 @@ const ProfileScreen = () => {
                     </Card>
 
                     <View style={styles.footer}>
-                        <StyledText variant="caption" style={styles.versionText}>LICHEN CORE V0.0.4</StyledText>
+                        <StyledText variant="caption" style={styles.versionText}>LICHEN CORE V0.0.8</StyledText>
                         <StyledText variant="caption" style={styles.creditText}>BUILT FOR ENVIRONMENTAL PRECISION</StyledText>
                     </View>
 

@@ -62,16 +62,16 @@ const styles = StyleSheet.create({
         borderRadius: BORDER_RADIUS.lg,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.15)',
+        borderColor: 'rgba(255, 255, 255, 0.12)',
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
-                shadowRadius: 12,
+                shadowOffset: { width: 0, height: 8 },
+                shadowOpacity: 0.3,
+                shadowRadius: 20,
             },
             android: {
-                elevation: 8,
+                elevation: 12,
             },
         }),
     },
@@ -83,10 +83,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     lightGlass: {
-        backgroundColor: 'rgba(255, 255, 255, 0.93)', // Slightly more transparent for better contrast with blur
+        backgroundColor: 'rgba(255, 255, 255, 0.90)',
     },
     darkGlass: {
-        backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        backgroundColor: 'rgba(10, 18, 35, 0.55)',
     },
 });
 

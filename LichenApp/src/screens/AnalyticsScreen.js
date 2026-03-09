@@ -141,7 +141,7 @@ const AnalyticsScreen = () => {
                         </Card>
                         <Card variant="light" style={styles.miniStats}>
                             <StyledText variant="caption" style={styles.darkLabel}>TIME WINDOW</StyledText>
-                            <StyledText style={styles.darkValue}>5.0m</StyledText>
+                            <StyledText style={styles.darkValue}>20s</StyledText>
                         </Card>
                     </View>
 

@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
     },
     logo: {
         color: COLORS.text,
-        fontSize: 20,
+        fontSize: 22,
         fontFamily: FONTS.bold,
-        letterSpacing: 4,
+        letterSpacing: 5,
     }
 });
 

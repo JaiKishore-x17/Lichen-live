@@ -31,13 +31,13 @@ const BackgroundWrapper = ({ children }) => {
                             id="glow1"
                             cx="0%"
                             cy="0%"
-                            rx="60%"
-                            ry="60%"
+                            rx="65%"
+                            ry="65%"
                             fx="0%"
                             fy="0%"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <Stop offset="0" stopColor={COLORS.primary} stopOpacity="0.15" />
+                            <Stop offset="0" stopColor={COLORS.primary} stopOpacity="0.2" />
                             <Stop offset="1" stopColor={COLORS.primary} stopOpacity="0" />
                         </RadialGradient>
 
@@ -77,8 +77,6 @@ const BackgroundWrapper = ({ children }) => {
                     <Rect x="0" y="0" width="100%" height="100%" fill="url(#glow1)" />
                     <Rect x="0" y="0" width="100%" height="100%" fill="url(#glow2)" />
                     <Rect x="0" y="0" width="100%" height="100%" fill="url(#glow3)" />
-
-                    {/* Subtle noise/texture would go here if needed, but keeping it clean for modern look */}
                 </Svg>
             </View>
             {children}

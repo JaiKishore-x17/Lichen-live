@@ -65,7 +65,7 @@ export const useRealtimeData = (path) => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 20000);
+        const interval = setInterval(fetchData, 2000);
         return () => clearInterval(interval);
     }, [path]);
 
