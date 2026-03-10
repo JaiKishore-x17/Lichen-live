@@ -141,6 +141,7 @@ const DashboardScreen = () => {
                                     <MapPin color={statusColor} size={20} />
                                 </View>
                                 <StyledText variant="header" style={styles.hubName}>{isOffline ? 'Lichen Offline' : 'Lichen Active Node'}</StyledText>
+                                <StyledText variant="caption" style={styles.hubCaption}>Location : VIT Chennai</StyledText>
                                 <View style={styles.syncStatus}>
                                     <View style={[styles.syncDot, { backgroundColor: statusColor }]} />
                                     <StyledText variant="caption" style={styles.syncText}>
@@ -157,8 +158,8 @@ const DashboardScreen = () => {
                                         <StyledText style={styles.insightText}>{co2} <StyledText style={styles.unitSmall}>PPM</StyledText></StyledText>
                                     </View>
                                     <View style={styles.gasItem}>
-                                        <StyledText style={styles.gasLabel}>NH4</StyledText>
-                                        <StyledText style={styles.insightText}>{getVal('MQ135', 'PPM_NH4')} <StyledText style={styles.unitSmall}>PPM</StyledText></StyledText>
+                                        <StyledText style={styles.gasLabel}>NH3</StyledText>
+                                        <StyledText style={styles.insightText}>{getVal('MQ135', 'PPM_NH3')} <StyledText style={styles.unitSmall}>PPM</StyledText></StyledText>
                                     </View>
                                     <View style={styles.gasItem}>
                                         <StyledText style={styles.gasLabel}>NO2</StyledText>
@@ -252,7 +253,7 @@ const DashboardScreen = () => {
                                     <StyledText variant="caption" style={styles.gridCaption}>DUST DENSITY</StyledText>
                                 </View>
                                 <StyledText variant="header" style={styles.gridValue}>
-                                    {getVal('Dust', 'Density_mgm3')} <StyledText style={styles.unit}>mg/m³</StyledText>
+                                    {getVal('Dust', 'Density_mgm3')*1000} <StyledText style={styles.unit}>ug/m³</StyledText>
                                 </StyledText>
                             </Card>
                         </View>
@@ -338,7 +339,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     aqiNumber: {
-        fontSize: 52,
+        fontSize: 33,
         fontWeight: 'bold',
         lineHeight: 56,
         textAlign: 'center',

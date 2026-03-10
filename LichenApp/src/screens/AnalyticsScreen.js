@@ -33,7 +33,7 @@ const AnalyticsScreen = () => {
             dataPointColor: COLORS.primary,
         }));
         const nh4Data = logs.map((log, index) => ({
-            value: Number(log.MQ135?.PPM_NH4) || 0,
+            value: Number(log.MQ135?.PPM_NH3) || 0,
             label: `-${(logs.length - 1 - index) * 20}s`,
             dataPointColor: COLORS.secondary,
         }));
@@ -129,7 +129,7 @@ const AnalyticsScreen = () => {
                     </View>
 
                     {renderLineChart(chartData.co2Data, COLORS.primary, "CO2 DENSITY (PPM)", BarChart2, maxPpmValue)}
-                    {renderLineChart(chartData.nh4Data, COLORS.secondary, "NH4 AMMONIA (PPM)", Waves, maxPpmValue)}
+                    {renderLineChart(chartData.nh4Data, COLORS.secondary, "NH3 AMMONIA (PPM)", Waves, maxPpmValue)}
                     {renderLineChart(chartData.no2Data, '#F472B6', "NO2 NITROGEN (PPM)", TrendingUp, maxPpmValue)}
 
                     <View style={styles.row}>

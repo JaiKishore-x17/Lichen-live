@@ -31,16 +31,15 @@ const NO2_BREAKPOINTS = [
     [1650, 2049, 401, 500],
 ];
 
-// NH3 (using NH4 as proxy) — WHO/CPCB indicative thresholds (μg/m³ converted from ppm: 1 ppm ≈ 696 μg/m³)
-// We keep units in ppb here: 1 ppm = 1000 ppb
+
 const NH3_BREAKPOINTS = [
-    [0, 200, 0, 50],   // Good
-    [201, 400, 51, 100],   // Moderate
-    [401, 800, 101, 150],   // Unhealthy for Sensitive
-    [801, 1200, 151, 200],   // Unhealthy
-    [1201, 1800, 201, 300],   // Very Unhealthy
-    [1801, 2400, 301, 400],   // Hazardous
-    [2401, 3000, 401, 500],   // Hazardous +
+    [0, 2500, 0, 50],         // Good (Up to 2.5 ppm)
+    [2501, 5000, 51, 100],     // Moderate (2.5 - 5 ppm: Odor starts)
+    [5001, 10000, 101, 150],   // Unhealthy for SG (5 - 10 ppm)
+    [10001, 25000, 151, 200],  // Unhealthy (10 - 25 ppm)
+    [25001, 50000, 201, 300],  // Very Unhealthy (25 - 50 ppm: OSHA Limit)
+    [50001, 150000, 301, 400], // Hazardous (50 - 150 ppm)
+    [150001, 300000, 401, 500],// Hazardous+ (Severe Risk)
 ];
 
 // AQI category definitions
@@ -111,8 +110,8 @@ export function calculateAQI(dustData, mq135Data) {
     }
 
     // NH3 (NH4 proxy): ppm → ppb (×1000)
-    if (mq135Data?.PPM_NH4 !== undefined) {
-        const nh3_ppb = parseFloat(mq135Data.PPM_NH4) * 1000;
+    if (mq135Data?.PPM_NH3 !== undefined) {
+        const nh3_ppb = parseFloat(mq135Data.PPM_NH3) * 1000;
         const idx = linearInterp(nh3_ppb, NH3_BREAKPOINTS);
         if (idx !== null) subIndexes['NH3'] = idx;
     }

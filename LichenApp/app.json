@@ -3,6 +3,12 @@
     "name": "LichenApp",
     "slug": "LichenApp",
     "version": "1.0.0",
+    "plugins": [
+      "expo-font"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

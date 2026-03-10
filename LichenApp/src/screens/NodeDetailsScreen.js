@@ -122,7 +122,7 @@ const NodeDetailsScreen = () => {
                             </View>
                             <View style={styles.telemetryItem}>
                                 <StyledText style={styles.dataLabel}>NH4 PPM</StyledText>
-                                <StyledText style={styles.dataValue}>{getVal('MQ135', 'PPM_NH4')}</StyledText>
+                                <StyledText style={styles.dataValue}>{getVal('MQ135', 'PPM_NH3')}</StyledText>
                             </View>
                         </View>
                     </Card>
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     telemetryCard: { marginBottom: SPACING.sm, padding: SPACING.md },
     telemetryHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: SPACING.md },
     darkCaption: { marginLeft: 10, color: COLORS.textSecondary },
-    telemetryData: { flexDirection: 'row', justifyContent: 'space-between' },
+    telemetryData: { flexDirection: 'column', justifyContent: 'space-between' },
     telemetryItem: { flex: 1 },
     dataLabel: { fontSize: 10, color: 'rgba(0,0,0,0.5)', fontWeight: 'bold' },
     dataValue: { fontSize: 20, color: COLORS.textDark, fontWeight: 'bold', marginTop: 4 },
