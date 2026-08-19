@@ -56,6 +56,13 @@ The architecture bridges local low-latency sensory hardware to a cloud-backed, c
 * **Instant Edge Render:** The React Native mobile application processes the real-time payload. Utilizing asynchronous stream listeners and optional runtime chaining, the interface maps changes to the UI instantaneously without relying on polling requests.
 
 ---
+## LichenLive App
+<img width="180" height="400" alt="image" src="https://github.com/user-attachments/assets/fc2c0a94-5e02-4a9f-bbb3-0c3e85e1674c" />
+<img width="180" height="400" alt="image" src="https://github.com/user-attachments/assets/98ebc8d9-9b01-44b2-b2b7-5ecb2067c2b2" />
+<img width="180" height="400" alt="image" src="https://github.com/user-attachments/assets/7aae3ca1-516c-4221-badb-23dedf96df73" />
+
+
+
 
 ## 🚀 Future Architectural Scope
 
